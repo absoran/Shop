@@ -37,6 +37,9 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddRazorPages();
             services.AddDbContext<ShopDbContext>(options => options.UseSqlServer(Configuration["DbConnection"]));
+
+            //services.AddDbContext<ShopDbContext>(options => options.UseSqlServer(Configuration["DbConnection"]), ServiceLifetime.Transient);
+
             //services.AddDbContext<ShopIdentityDbContext>(options => options.UseSqlServer(Configuration["IdentityConnection"]));
             services.AddControllers();
             services.AddAppServices();

@@ -9,7 +9,7 @@ namespace Core.Interfaces
 {
     public interface IPaymentService
     {
-        Task<ShoppingCart> CreateOrUpdatePaymentIntent(string cartid);
+        Task<ShoppingCart> CreateOrUpdatePaymentIntent(int cartid);
         Task<Order> UpdatePaymentOrderSucceeded(string paymentIntentId);
         Task<Order> UpdatePaymentOrderFailed(string paymentIntentId);
         Task<Order> ConfirmOrder(string paymentIntentId);

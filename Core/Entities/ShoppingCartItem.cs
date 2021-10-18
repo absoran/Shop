@@ -14,7 +14,6 @@ namespace Core.Entities
         public decimal TotalPrice { get; set; }
         [Column(TypeName = "decimal(18,5)")]
         public decimal UnitPrice { get; set; }
-        public int Productid { get; set; }
         public Product Product { get; set; }
 
     }

@@ -11,6 +11,5 @@ namespace Core.Entities.Order
         [Column(TypeName = "decimal(18,5)")]
         public decimal ShippingPrice { get; set; }
         public string EstdeliveryTime { get; set; }
-        public ShippingStatus ShippingStatus { get; set; }
     }
 }

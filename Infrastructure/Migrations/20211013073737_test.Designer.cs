@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20211011121607_init")]
-    partial class init
+    [Migration("20211013073737_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,9 +65,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AdressId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Authority")
                         .HasColumnType("int");
@@ -134,6 +131,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<decimal>("Subtotal")
                         .HasColumnType("decimal(18,5)");
+
+                    b.Property<int>("shippingStatus")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -226,9 +226,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<decimal>("ShippingPrice")
                         .HasColumnType("decimal(18,5)");
-
-                    b.Property<int>("ShippingStatus")
-                        .HasColumnType("int");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
@@ -360,7 +357,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Productid")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -377,7 +374,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Productid");
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("ShoppingCartId");
 
@@ -449,9 +446,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("Productid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Core.Entities.ShoppingCart", null)
                         .WithMany("Items")

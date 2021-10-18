@@ -8,8 +8,9 @@ namespace Core.Interfaces
 {
     public interface IShoppingCartRepository
     {
-        Task<ShoppingCart> GetCartAsync(string cartid);
+        //Task<ShoppingCart> CreateOrGetCart(string cartid);
+        Task<ShoppingCart> GetCartAsync(int id);
         Task<ShoppingCart> UpdateCartAsync(ShoppingCart cart);
-        Task<bool> DeleteCartAsync(string cartid);
+        Task<ShoppingCart> DeleteCartAsync(int id);
     }
 }

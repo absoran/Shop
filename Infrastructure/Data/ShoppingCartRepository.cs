@@ -9,22 +9,34 @@ using StackExchange.Redis;
 
 namespace Infrastructure.Data
 {
-    public class ShoppingCartRepository : IShoppingCartRepository
+    public class ShoppingCartRepository : ShopRepository<ShoppingCart>,IShoppingCartRepository
     {
         private readonly IDatabase _database;
+        private readonly ShopDbContext _dbContext;
 
-        public ShoppingCartRepository(IConnectionMultiplexer redis)
+        public ShoppingCartRepository(IConnectionMultiplexer redis,ShopDbContext context) : base(context)
         {
             _database = redis.GetDatabase();
+            _dbContext = context;
         }
-        public async Task<bool> DeleteCartAsync(string cartid)
+        public async Task<ShoppingCart> DeleteCartAsync(int id)
         {
-            return await _database.KeyDeleteAsync(cartid);
+            try
+            {
+                var cart = await _dbContext.Set<ShoppingCart>().FindAsync(id);
+                _dbContext.Set<ShoppingCart>().Remove(cart);
+                _dbContext.SaveChanges();
+                return cart;
+            }
+            catch
+            {
+                throw new ApplicationException("cant find entity");
+            }
         }
 
-        public async Task<ShoppingCart> GetCartAsync(string cartid)
+        public async Task<ShoppingCart> GetCartAsync(int id)
         {
-            var data = await _database.StringGetAsync(cartid);
+            var data = await _database.StringGetAsync(id.ToString());
             return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<ShoppingCart>(data);
         }
 
@@ -34,7 +46,7 @@ namespace Infrastructure.Data
 
             if (!created) return null;
 
-            return await GetCartAsync(cart.SId);
+            return await GetCartAsync(cart.Id);
         }
     }
 }

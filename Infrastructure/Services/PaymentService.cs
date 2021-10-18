@@ -26,7 +26,7 @@ namespace Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ShoppingCart> CreateOrUpdatePaymentIntent(string cartid)
+        public async Task<ShoppingCart> CreateOrUpdatePaymentIntent(int cartid)
         {
             StripeConfiguration.ApiKey = _config["SuperSecretKey"];
             var cart = await _shoppingCartRepository.GetCartAsync(cartid);
@@ -47,7 +47,6 @@ namespace Infrastructure.Services
             }
             var service = new PaymentIntentService();
             PaymentIntent intent;
-
             if (string.IsNullOrEmpty(cart.PaymentIntentId))
             {
                 var options = new PaymentIntentCreateOptions

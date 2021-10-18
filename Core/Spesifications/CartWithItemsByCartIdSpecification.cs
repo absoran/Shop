@@ -13,5 +13,9 @@ namespace Core.Spesifications
         {
             AddInclude(p => p.Items);
         }
+        public CartWithItemsByCartIdSpecification(int id) : base(o => o.Id == id)
+        {
+            AddInclude(p => p.Items);
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace Core.Entities.Order
         [Column(TypeName = "decimal(18,5)")]
         public decimal Subtotal { get; set; }
         public OrderStatus Status { get; set; }
+        public ShippingStatus shippingStatus { get; set; }
         public string PaymentIntentId { get; set; }
 
         public decimal GetTotal()

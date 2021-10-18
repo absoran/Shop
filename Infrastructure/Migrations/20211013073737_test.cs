@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,7 +96,6 @@ namespace Infrastructure.Migrations
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShippingPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false),
                     EstdeliveryTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShippingStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -112,7 +111,6 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AdressId = table.Column<int>(type: "int", nullable: false),
                     Authority = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -164,6 +162,7 @@ namespace Infrastructure.Migrations
                     ShippingId = table.Column<int>(type: "int", nullable: true),
                     Subtotal = table.Column<decimal>(type: "decimal(18,5)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    shippingStatus = table.Column<int>(type: "int", nullable: false),
                     PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -219,7 +218,7 @@ namespace Infrastructure.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false),
-                    Productid = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
                     ShoppingCartId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -233,11 +232,11 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CartItems_Products_Productid",
-                        column: x => x.Productid,
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,9 +274,9 @@ namespace Infrastructure.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_Productid",
+                name: "IX_CartItems_ProductId",
                 table: "CartItems",
-                column: "Productid");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_ShoppingCartId",

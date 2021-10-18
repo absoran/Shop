@@ -57,6 +57,7 @@ namespace API.Controllers
         //    return await _productRepo.UpdateAsync(productToUpdate);
             
         //}
+
         [HttpGet]
         [Route("getbyid/{id}")]
         public async Task<ActionResult<ProductToReturnDTO>> GetProductByID(int id)

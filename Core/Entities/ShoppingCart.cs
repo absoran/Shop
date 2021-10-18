@@ -10,7 +10,7 @@ namespace Core.Entities
     {
         public ShoppingCart()
         {
-
+            SId = Id.ToString();
         }
         public ShoppingCart(string id)
         {
@@ -34,13 +34,15 @@ namespace Core.Entities
             {
                 existingItem.Quantity++;
                 existingItem.TotalPrice = (existingItem.Quantity * existingItem.Product.Price);
+                existingItem.CreatedDate = DateTime.Now;
             }
             else
             {
                 Items.Add(new ShoppingCartItem()
                 {
-                    Productid = productid,
+                    Id = productid,
                     Quantity = quantity,
+                    CreatedDate = DateTime.Now,
                     UnitPrice = unitPrice,
                     TotalPrice = quantity * unitPrice
                 });

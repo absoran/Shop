@@ -34,7 +34,7 @@ namespace API.Controllers //ToDo
         {
             var user = await _userrepo.GetByNameAsync(username);
             var addressToShip = _mapper.Map<AdressDTO, OrderAddress>(orderdto.ShipToAddress);
-            var order = await _orderservice.CreateOrderAsync(user.Email, orderdto.DeliveryMethodId, orderdto.ShoppingCartID, addressToShip);
+            var order = await _orderservice.CreateOrderAsync(user.Email, orderdto.DeliveryMethodId, Convert.ToInt32(orderdto.ShoppingCartID), addressToShip);
             if (order == null)
             {
                 return BadRequest(new APIResponse(400, "Error at creating order"));

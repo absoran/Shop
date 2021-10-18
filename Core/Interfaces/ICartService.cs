@@ -10,9 +10,12 @@ namespace Core.Interfaces
     public interface ICartService
     {
         Task<ShoppingCart> GetCartById(int id);
-        Task AddItem(string sid, int productId);
-        Task RemoveItem(int cartId, int cartItemId);
-        Task ClearCart(int cartid);
-        Task<ShoppingCart> GetExistingOrCreateNewCart(string sid);
+        Task<ShoppingCart> AddItem(int  id, int productId);
+        Task<ShoppingCart> RemoveItem(int cartId, int cartItemId);
+        Task<ShoppingCart> ClearCart(int cartid);
+        Task<ShoppingCart> GetExistingCart(int id);
+        Task<ShoppingCart> CreateNewCart();
+        public Task ValidateCart(string sid);
+        public Task ValidateCart(int id);
     }
 }

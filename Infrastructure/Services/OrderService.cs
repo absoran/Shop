@@ -21,7 +21,7 @@ namespace Infrastructure.Services
             _unitOfWork = unitOfWork;
             _paymentService = paymentService;
         }
-        public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, string basketId, OrderAddress shippingAddress)
+        public async Task<Order> CreateOrderAsync(string buyerEmail, int deliveryMethodId, int basketId, OrderAddress shippingAddress)
         {
             var spec = new CartWithItemsByCartIdSpecification(basketId);
             var cartWithSpec = await _unitOfWork.Repository<ShoppingCart>().GetEntityWithSpec(spec);
@@ -43,7 +43,7 @@ namespace Infrastructure.Services
             if(checkorder != null)
             {
                 _unitOfWork.Repository<Order>().Delete(checkorder);
-                await _paymentService.CreateOrUpdatePaymentIntent(cartWithSpec.PaymentIntentId);
+                await _paymentService.CreateOrUpdatePaymentIntent(Convert.ToInt32(cartWithSpec.PaymentIntentId));
             }
             var newOrder = new Order(items, buyerEmail, shippingAddress,shipping,subPrice,cartWithSpec.PaymentIntentId);
             _unitOfWork.Repository<Order>().Add(newOrder);
